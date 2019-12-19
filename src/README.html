@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<style type="text/css">
+			body{
+				background-color: #FFFFCC;
+				color: #666666;
+				font-family: "Trebuchet MS";
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			#container{
+				background-color: #FFFFFF;
+				width: 800px;
+				height: auto;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 0;
+				margin-bottom: 0;
+				border-left: 1px solid #CCCCCC;
+				border-right: 1px solid #CCCCCC;
+				border-top: 1px solid #CCCCCC;
+			}
+			#firstchild{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			.subcontainer{
+				margin-top: 50px;
+				margin-bottom: 50px;
+				border-top: 1px dotted #E8E8E8;
+			}
+			h1{
+				text-align: center;
+			}
+			.code{
+				background-color: #000000;
+				color: #00FF00;
+				margin-top: 20px;
+				padding: 10px;
+			}
+			code{
+				padding: 5px;
+			}
+			.by{
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<h1>Comprafácil - Payment Method</h2>
+			<div id="firstchild">
+				<div class="subcontainer">
+					<h2>Unzip</h2>
+					<div>Move the files inside the "files" folder in your magento website root.</div>
+				</div>
+				<div class="subcontainer">
+					<h2>Create module table</h2>
+					Run this query in the magento database
+					<div>
+						<div class="code">
+							<code>
+								CREATE TABLE `comprafacil` ( <br>
+								  `id` int(11) NOT NULL AUTO_INCREMENT, <br>
+								  `entity_id` int(11) NOT NULL, <br>
+								  `reference` text NOT NULL, <br>
+								  `entity` text NOT NULL, <br>
+								  `value` double NOT NULL, <br>
+								  `status` tinyint(1) DEFAULT '0', <br>
+								  `key` text, <br>
+								  PRIMARY KEY (`id`) <br>
+								) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;  <br>
+							</code>
+						</div>
+					</div>
+				</div>
+				<div class="subcontainer">
+					<h2>Add multibanco payment info on the sucess file (Optional)</h2>
+					Usually this file is located at "app/design/frontend/base/default/template/checkout/success.phtml" <br/>
+					If you have a custom template you must locate this file in your template.
+					<div>
+						<div class="code">
+							<code>
+								&lt;?php <br/>
+								$order = Mage::getModel('sales/order')->loadByIncrementId($this->getOrderId()); <br/>
+								if($order->getPayment()->getMethod() == "cf"){ <br/>
+									$cf = Mage::getModel('cf/paymentmethod'); <br/>
+									echo $cf->getRefhtml($this->getOrderId()); <br/>
+								} <br/>
+								?&gt; <br/>
+							</code>
+						</div>
+					</div>
+				</div>
+				<div class="subcontainer">
+					<h2>Configure the Payment Method</h2>
+					<div>Login into backend and configure the payment module with the correct values.</div>
+				</div>
+				<div class="by">
+					<center>v 2.1, Webeffect</center>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
