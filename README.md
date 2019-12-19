@@ -1,2 +1,1 @@
-# hipaypt-multibanco-magento-1
-Multibanco extension for Magento 1
+## HiPay Multibanco extension for Magento 1
